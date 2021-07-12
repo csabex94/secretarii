@@ -4,9 +4,9 @@
             <!-- Left section -->
             <left-section />
             <!-- Middle section -->
-            <middle-section />
+            <middle-section  :handleOpenRightSide="openRightSide" />
             <!-- Right section -->
-            <right-section />
+            <right-section v-if="showRightSide" :closeRightSide="closeRightSide" />
         </section>
     </div>
 </template>
@@ -23,6 +23,19 @@ export default {
         canRegister: Boolean,
         laravelVersion: String,
         phpVersion: String,
+    },
+    data() {
+        return {
+            showRightSide: false
+        }
+    },
+    methods: {
+        openRightSide() {
+            this.showRightSide = true;
+        },
+        closeRightSide() {
+            this.showRightSide = false;
+        }
     }
 }
 </script>
