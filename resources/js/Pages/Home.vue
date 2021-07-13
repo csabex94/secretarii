@@ -1,12 +1,17 @@
 <template>
     <div class="h-screen">
-        <section class="shadow-xl rounded-md w-full lg:mx-auto flex">
+        <section class="shadow-xl rounded-md w-full lg:mx-auto flex overflow-hidden">
             <!-- Left section -->
-            <left-section />
-            <!-- Middle section -->
-            <middle-section />
+
+            <div class="relative">
+                <left-section :changeCurrentRightSide="changeCurrentRightSide" :switchToTeam="switchToTeam" />
+                <add-group :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
+                <add-contact :findContacts="findContacts" :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
+            </div>
+
+            <middle-section  :handleOpenRightSide="openRightSide" />
+            <right-section v-show="showRightSide" :closeRightSide="closeRightSide" />
             <!-- Right section -->
-            <right-section />
         </section>
     </div>
 </template>
@@ -15,23 +20,62 @@
 import LeftSection from "@/Components/LeftSection";
 import MiddleSection from "@/Components/MiddleSection";
 import RightSection from "@/Components/RightSection";
+import AddGroup from "@/Components/AddGroup";
+import AddContact from "@/Components/AddContact";
 
 export default {
-    components: {RightSection, MiddleSection, LeftSection},
+    components: {
+        RightSection,
+        MiddleSection,
+        LeftSection,
+        AddGroup,
+        AddContact
+    },
     props: {
         canLogin: Boolean,
         canRegister: Boolean,
         laravelVersion: String,
         phpVersion: String,
+        rightSide: String,
+        findContacts: Array
+    },
+    data() {
+        return {
+            showRightSide: false,
+            currentRightSide: 'groups'
+        }
+    },
+    methods: {
+        openRightSide() {
+            this.showRightSide = true;
+        },
+        closeRightSide() {
+            this.showRightSide = false;
+        },
+        changeCurrentRightSide(component) {
+            this.currentRightSide = component;
+        },
+        switchToTeam(teamId) {
+            this.$inertia.put(route('current-team.update'), {
+                'team_id': teamId
+            }, {
+                preserveState: false
+            })
+        },
+    },
+    mounted() {
+        if (this.rightSide) {
+            this.currentRightSide = this.rightSide;
+        }
     }
 }
 </script>
 
 <style scoped>
-section {
-    height: 100%;
-    min-height: 95vh;
-}
+    section {
+        height: 100%;
+        min-height: 95vh;
+    }
 </style>
 
 

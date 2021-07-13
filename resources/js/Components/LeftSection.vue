@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full lg:w-3/6 xl:w-2/6 flex flex-col justify-start items-stretch  bg-gray-50  rounded-md lg:rounded-none lg:rounded-l-md p-3">
+    <div class="groups flex flex-col justify-start items-stretch bg-white  rounded-md lg:rounded-none lg:rounded-l-md p-3">
         <div class="flex-auto flex flex-col">
             <div class="flex-auto flex flex-row">
                 <div class="w-full p-1">
@@ -7,99 +7,65 @@
                         <input
                             type="text"
                             placeholder="Search"
-                            class="search-input mr-2 bg-gray-600 bg-opacity-10 placeholder-gray-500 text-gray-400 text-sm py-1 px-10 rounded-md outline-none w-full focus:outline-none focus:ring"
+                            class="search-input mr-2 bg-gray-600 bg-opacity-10 placeholder-gray-500 pl-10 text-gray-400 text-sm py-1 rounded-md outline-none w-full focus:outline-none"
                         />
-                        <button class="flex flex-col justify-center items-center p-2 rounded-full focus:ring-2 hover:bg-gray-300 hover:bg-opacity-30 focus:outline-none" aria-label="Add">
-                            <svg class="fill-current h-4 w-4" viewBox="0 0 25 25">
-                                <path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z"/>
-                            </svg>
-                        </button>
+                        <jet-dropdown>
+                            <template #trigger>
+                                <button class="flex flex-col justify-center items-center p-2 rounded-full focus:ring-2 hover:bg-gray-200 hover:bg-opacity-30 focus:outline-none" aria-label="Add">
+                                    <svg class="fill-current h-4 w-4" viewBox="0 0 25 25">
+                                        <path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z"/>
+                                    </svg>
+                                </button>
+                            </template>
+                            <template #content>
+                                <jet-dropdown-link @click="changeCurrentRightSide('add-group')" as="button">
+                                    <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mr-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                        </svg>
+                                        Add Group
+                                    </div>
+                                </jet-dropdown-link>
+                                <jet-dropdown-link @click="changeCurrentRightSide('add-contact')" as="button">
+                                    <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mr-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                                        </svg>
+                                        Add Contact
+                                    </div>
+                                </jet-dropdown-link>
+                            </template>
+                        </jet-dropdown>
                     </div>
-                    <ul class="overflow-y-auto">
-                        <li class="my-2 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
-                            <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-997145684-1547233351.jpg?crop=1xw:1xh;center,top&resize=480:*" class="h-12 w-12 rounded-full mr-4" alt="">
+
+                    <ul v-if="$page.props.user.all_teams" class="groupList overflow-y-auto">
+                        <li
+                            @click.prevent="switchToTeam(team.id)"
+                            v-for="team in $page.props.user.all_teams"
+                            :key="team.id"
+                            class="my-2 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-200"
+                            :class="$page.props.user.current_team_id === team.id ? 'bg-gray-200' : ''"
+                        >
+                            <img src="/group.png" class="h-12 contrast bg-gray-700 w-12 rounded-full mr-4" alt="">
                             <div class="w-full flex flex-col justify-center">
                                 <div class="flex flex-row justify-between items-center">
-                                    <h2 class="text-xs font-bold">Benjamin Julien</h2>
+                                    <h2 class="text-xs font-bold">{{ team['name']}}</h2>
                                     <div class="text-xs flex flex-row">
+                                        <!-- If Message was read/seen -->
                                         <svg class="w-4 h-4 text-blue-600 fill-current mr-1" viewBox="0 0 19 14">
                                             <path fill-rule="nonzero" d="M4.96833846,10.0490996 L11.5108251,2.571972 C11.7472185,2.30180819 12.1578642,2.27443181 12.428028,2.51082515 C12.6711754,2.72357915 12.717665,3.07747757 12.5522007,3.34307913 L12.4891749,3.428028 L5.48917485,11.428028 C5.2663359,11.6827011 4.89144111,11.7199091 4.62486888,11.5309823 L4.54038059,11.4596194 L1.54038059,8.45961941 C1.2865398,8.20577862 1.2865398,7.79422138 1.54038059,7.54038059 C1.7688373,7.31192388 2.12504434,7.28907821 2.37905111,7.47184358 L2.45961941,7.54038059 L4.96833846,10.0490996 L11.5108251,2.571972 L4.96833846,10.0490996 Z M9.96833846,10.0490996 L16.5108251,2.571972 C16.7472185,2.30180819 17.1578642,2.27443181 17.428028,2.51082515 C17.6711754,2.72357915 17.717665,3.07747757 17.5522007,3.34307913 L17.4891749,3.428028 L10.4891749,11.428028 C10.2663359,11.6827011 9.89144111,11.7199091 9.62486888,11.5309823 L9.54038059,11.4596194 L8.54038059,10.4596194 C8.2865398,10.2057786 8.2865398,9.79422138 8.54038059,9.54038059 C8.7688373,9.31192388 9.12504434,9.28907821 9.37905111,9.47184358 L9.45961941,9.54038059 L9.96833846,10.0490996 L16.5108251,2.571972 L9.96833846,10.0490996 Z"></path>
                                         </svg>
+                                        <!-- When the Message was read/seen -->
                                         <span class="text-gray-400">
-                            10:45
-                          </span>
+                                        10:45
+                                      </span>
                                     </div>
                                 </div>
                                 <div class="flex flex-row justify-between items-center">
+                                    <!-- Ultimate Message -->
                                     <p class="text-xs text-gray-500">On projection apartments unsatiable...</p>
+                                    <!-- New unread messages count -->
                                     <span class="text-sm bg-blue-500 rounded-full w-5 h-5 text-center text-white font-bold">4</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="my-2 p-2 flex flex-row bg-blue-500 rounded-lg cursor-pointer">
-                            <img src="https://t.aimg.sk/magaziny/Ts0fWXOKR12frPTjZ3a8UA~Prav-burger-dom-ca-buchta.png?t=LzB4MzU6NTg2eDM2NS85MjB4NzYwL3NtYXJ0L2ZpbHRlcnM6Zm9ybWF0KGpwZWcp&h=aSkfJNypYaRvL4kRNsFH8g&e=2145916800&v=5" class="h-12 w-12 rounded-full mr-4" alt="">
-                            <div class="w-full flex flex-col justify-center text-white">
-                                <div class="flex flex-row justify-between">
-                                    <h2 class="text-xs  font-bold">Food porn group</h2>
-                                    <span class="text-xs">10:45</span>
-                                </div>
-                                <div class="flex flex-row justify-between items-center">
-                                    <p class="text-xs">There are many variations of passages...</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="my-2 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
-                            <img class="w-12 h-12 mr-4 rounded-full" src="https://www.telegraph.co.uk/multimedia/archive/03249/archetypal-female-_3249633c.jpg" alt="" />
-                            <div class="w-full flex flex-col justify-center">
-                                <div class="flex flex-row justify-between">
-                                    <h2 class="text-xs font-bold">Angela Vang</h2>
-                                    <div class="text-xs flex flex-row">
-                                        <svg class="w-4 h-4 text-blue-600 fill-current mr-1" viewBox="0 0 20 20">
-                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"></path>
-                                        </svg>
-                                        <span class="text-gray-400">
-                            10:45
-                          </span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row justify-between items-center">
-                                    <p class="text-xs text-gray-500">Sudden looked elinor off gay estate...</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="my-2 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
-                            <img class="w-12 h-12 mr-4 rounded-full" src="https://wallstreetinsanity.com/wp-content/uploads/This-Survey-Shows-Us-How-Different-Men-And-Women-View-The-Perfect-Female-Face-.jpg" alt="" />
-                            <div class="w-full flex flex-col justify-center">
-                                <div class="flex flex-row justify-between">
-                                    <h2 class="text-xs font-bold">Olivia</h2>
-                                    <div class="text-xs flex flex-row">
-                          <span class="text-gray-400">
-                            10:45
-                          </span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row justify-between items-center">
-                                    <p class="text-xs text-gray-500">Breakfast agreeable incommode depar...</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="my-2 p-2 flex flex-row cursor-pointer rounded-lg hover:bg-gray-300 hover:bg-opacity-50">
-                            <img class="w-12 h-12 mr-4 rounded-full" src="https://www.statnews.com/wp-content/uploads/2018/01/AdobeStock_107381486-645x645.jpeg" alt="" />
-                            <div class="w-full flex flex-col justify-center">
-                                <div class="flex flex-row justify-between">
-                                    <h2 class="text-xs font-bold">Yaeko Lindblom</h2>
-                                    <div class="text-xs flex flex-row">
-                                        <svg class="w-4 h-4 text-blue-600 fill-current mr-1" viewBox="0 0 19 14">
-                                            <path fill-rule="nonzero" d="M4.96833846,10.0490996 L11.5108251,2.571972 C11.7472185,2.30180819 12.1578642,2.27443181 12.428028,2.51082515 C12.6711754,2.72357915 12.717665,3.07747757 12.5522007,3.34307913 L12.4891749,3.428028 L5.48917485,11.428028 C5.2663359,11.6827011 4.89144111,11.7199091 4.62486888,11.5309823 L4.54038059,11.4596194 L1.54038059,8.45961941 C1.2865398,8.20577862 1.2865398,7.79422138 1.54038059,7.54038059 C1.7688373,7.31192388 2.12504434,7.28907821 2.37905111,7.47184358 L2.45961941,7.54038059 L4.96833846,10.0490996 L11.5108251,2.571972 L4.96833846,10.0490996 Z M9.96833846,10.0490996 L16.5108251,2.571972 C16.7472185,2.30180819 17.1578642,2.27443181 17.428028,2.51082515 C17.6711754,2.72357915 17.717665,3.07747757 17.5522007,3.34307913 L17.4891749,3.428028 L10.4891749,11.428028 C10.2663359,11.6827011 9.89144111,11.7199091 9.62486888,11.5309823 L9.54038059,11.4596194 L8.54038059,10.4596194 C8.2865398,10.2057786 8.2865398,9.79422138 8.54038059,9.54038059 C8.7688373,9.31192388 9.12504434,9.28907821 9.37905111,9.47184358 L9.45961941,9.54038059 L9.96833846,10.0490996 L16.5108251,2.571972 L9.96833846,10.0490996 Z"></path>
-                                        </svg>
-                                        <span class="text-gray-400">
-                            10:45
-                          </span>
-                                    </div>
-                                </div>
-                                <div class="flex flex-row justify-between items-center">
-                                    <p class="text-xs text-gray-500">New the her nor case that lady paid...</p>
-                                    <span class="text-sm bg-blue-500 rounded-full w-5 h-5 text-center text-white font-bold">1</span>
                                 </div>
                             </div>
                         </li>
@@ -111,8 +77,29 @@
 </template>
 
 <script>
+import JetDropdown from '@/Jetstream/Dropdown';
+import JetDropdownLink from '@/Jetstream/DropdownLink'
+
 export default {
-    name: "LeftSection"
+    name: "LeftSection",
+    components: {
+        JetDropdown,
+        JetDropdownLink
+    },
+    props: {
+        changeCurrentRightSide: Function,
+        switchToTeam: Function
+    },
+    methods: {
+        getTeams() {
+            let list = [];
+            for (let [key, value] of Object.entries(this.$page.props.user.all_teams)) {
+                list.push(value);
+            }
+            return list;
+        },
+
+    }
 }
 </script>
 
@@ -122,5 +109,25 @@ export default {
         background-repeat: no-repeat;
         background-position: left 0.75rem center;
         background-size: 0.9rem 1.25rem;
+    }
+    .contrast {
+        filter: grayscale(1) invert(1);
+    }
+    .groups {
+        width: 100%;
+        min-width: 320px;
+    }
+    .groupList {
+        height: 90vh;
+    }
+    .groupList::-webkit-scrollbar {
+        width: 6px;               /* width of the entire scrollbar */
+    }
+    .groupList::-webkit-scrollbar-track {
+        background: lightgrey;        /* color of the tracking area */
+    }
+    .groupList::-webkit-scrollbar-thumb {
+        background-color: gray;    /* color of the scroll thumb */
+        border-radius: 10px;       /* roundness of the scroll thumb */ /* creates padding around scroll thumb */
     }
 </style>

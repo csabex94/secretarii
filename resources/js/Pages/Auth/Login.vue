@@ -56,11 +56,11 @@
                     <form @submit.prevent="submit">
                         <div class="mb-6">
                             <jet-label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400" value="Email" />
-                            <jet-input id="email" type="email" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" v-model="form.email" required autofocus />
+                            <jet-input id="email" type="email" class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded" v-model="form.email" required autofocus />
                         </div>
                         <div class="mb-2">
                             <jet-label for="password" class="text-sm text-gray-600 dark:text-gray-400" value="Password" />
-                            <jet-input id="password"  type="password" class="w-full mt-1 px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" v-model="form.password" required autocomplete="current-password" />
+                            <jet-input id="password"  type="password" class="w-full px-5  py-4 text-gray-700 bg-gray-200 rounded" v-model="form.password" required autocomplete="current-password" />
                         </div>
                         <inertia-link v-if="canResetPassword" :href="route('password.request')" class="text-sm my-1 text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300">
                             Forgot your password?

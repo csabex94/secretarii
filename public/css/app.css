@@ -1369,6 +1369,12 @@ select {
 .w-32 {
 	width: 8rem;
 }
+.w-2\/4 {
+	width: 50%;
+}
+.w-4\/6 {
+	width: 66.666667%;
+}
 .min-w-0 {
 	min-width: 0px;
 }
@@ -1395,6 +1401,9 @@ select {
 }
 .flex-shrink-0 {
 	flex-shrink: 0;
+}
+.flex-grow {
+	flex-grow: 1;
 }
 .origin-top-left {
 	transform-origin: top left;
@@ -1456,6 +1465,9 @@ select {
 .flex-wrap {
 	flex-wrap: wrap;
 }
+.items-start {
+	align-items: flex-start;
+}
 .items-center {
 	align-items: center;
 }
@@ -1510,8 +1522,14 @@ select {
 .overflow-y-auto {
 	overflow-y: auto;
 }
+.overflow-x-hidden {
+	overflow-x: hidden;
+}
 .overflow-y-hidden {
 	overflow-y: hidden;
+}
+.overflow-y-scroll {
+	overflow-y: scroll;
 }
 .truncate {
 	overflow: hidden;
@@ -1655,6 +1673,18 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
 }
+.bg-gray-900 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+}
+.bg-red-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+.bg-gray-700 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+}
 .bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
 }
@@ -1746,6 +1776,10 @@ select {
 	padding-left: 2.5rem;
 	padding-right: 2.5rem;
 }
+.px-5 {
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+}
 .pt-6 {
 	padding-top: 1.5rem;
 }
@@ -1778,6 +1812,9 @@ select {
 }
 .pt-8 {
 	padding-top: 2rem;
+}
+.pl-10 {
+	padding-left: 2.5rem;
 }
 .text-left {
 	text-align: left;
@@ -2013,6 +2050,14 @@ select {
 .ring-opacity-5 {
 	--tw-ring-opacity: 0.05;
 }
+.grayscale {
+	--tw-grayscale: grayscale(100%);
+	filter: var(--tw-filter);
+}
+.invert {
+	--tw-invert: invert(100%);
+	filter: var(--tw-filter);
+}
 .filter {
 	filter: var(--tw-filter);
 }
@@ -2083,6 +2128,10 @@ select {
 .hover\:bg-gray-300:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
+.hover\:bg-gray-200:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
 }
 .hover\:bg-opacity-30:hover {
 	--tw-bg-opacity: 0.3;

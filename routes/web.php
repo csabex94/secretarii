@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GroupController;
 use Inertia\Inertia;
 
 /*
@@ -14,11 +15,14 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/token', function() {
+    return csrf_token();
+});
 
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return Inertia::render('Home');
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/', [GroupController::class, 'index'])->name('home');
 });
 
 
