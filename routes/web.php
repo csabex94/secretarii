@@ -16,17 +16,9 @@ use Inertia\Inertia;
 */
 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/home', function () {
-    return Inertia::render('Home');
-})->name('home');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => false,
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Home');
 });
 
 
