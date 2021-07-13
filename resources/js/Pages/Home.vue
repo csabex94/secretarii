@@ -9,8 +9,8 @@
                 <add-contact :findContacts="findContacts" :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
             </div>
 
-            <middle-section  :handleOpenRightSide="openRightSide" />
-            <right-section v-show="showRightSide" :closeRightSide="closeRightSide" />
+            <middle-section :changeCurrentLeftSide="changeCurrentLeftSide" />
+            <right-section v-show="currentLeftSide === 'group-settings'" :changeCurrentLeftSide="changeCurrentLeftSide" />
             <!-- Right section -->
         </section>
     </div>
@@ -41,17 +41,11 @@ export default {
     },
     data() {
         return {
-            showRightSide: false,
-            currentRightSide: 'groups'
+            currentRightSide: 'groups',
+            currentLeftSide: ''
         }
     },
     methods: {
-        openRightSide() {
-            this.showRightSide = true;
-        },
-        closeRightSide() {
-            this.showRightSide = false;
-        },
         changeCurrentRightSide(component) {
             this.currentRightSide = component;
         },
@@ -62,6 +56,9 @@ export default {
                 preserveState: false
             })
         },
+        changeCurrentLeftSide(component) {
+            this.currentLeftSide = component;
+        }
     },
     mounted() {
         if (this.rightSide) {

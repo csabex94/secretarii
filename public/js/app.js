@@ -18129,8 +18129,7 @@ __webpack_require__.r(__webpack_exports__);
     Messages: _Components_Messages__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
-    showRightSide: Boolean,
-    handleOpenRightSide: Function
+    changeCurrentLeftSide: Function
   },
   data: function data() {
     return {
@@ -18161,10 +18160,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "RightSection",
   props: {
-    closeRightSide: Function
-  },
-  name: "RightSection"
+    changeCurrentLeftSide: Function
+  }
 });
 
 /***/ }),
@@ -19517,17 +19516,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      showRightSide: false,
-      currentRightSide: 'groups'
+      currentRightSide: 'groups',
+      currentLeftSide: ''
     };
   },
   methods: {
-    openRightSide: function openRightSide() {
-      this.showRightSide = true;
-    },
-    closeRightSide: function closeRightSide() {
-      this.showRightSide = false;
-    },
     changeCurrentRightSide: function changeCurrentRightSide(component) {
       this.currentRightSide = component;
     },
@@ -19537,6 +19530,9 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         preserveState: false
       });
+    },
+    changeCurrentLeftSide: function changeCurrentLeftSide(component) {
+      this.currentLeftSide = component;
     }
   },
   mounted: function mounted() {
@@ -20913,8 +20909,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring",
     "aria-label": "Search"
   }, [_hoisted_8]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[2] || (_cache[2] = function () {
-      return $props.handleOpenRightSide && $props.handleOpenRightSide.apply($props, arguments);
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $props.changeCurrentLeftSide('group-settings');
     }),
     type: "button",
     "class": "p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring",
@@ -21052,8 +21048,8 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticV
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("header", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[1] || (_cache[1] = function () {
-      return $props.closeRightSide && $props.closeRightSide.apply($props, arguments);
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $props.changeCurrentLeftSide('');
     }),
     type: "button",
     "class": "p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring"
@@ -24285,14 +24281,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, null, 8
   /* PROPS */
   , ["findContacts", "changeCurrentRightSide", "currentRightSide"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_middle_section, {
-    handleOpenRightSide: $options.openRightSide
+    changeCurrentLeftSide: $options.changeCurrentLeftSide
   }, null, 8
   /* PROPS */
-  , ["handleOpenRightSide"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_right_section, {
-    closeRightSide: $options.closeRightSide
+  , ["changeCurrentLeftSide"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_right_section, {
+    changeCurrentLeftSide: $options.changeCurrentLeftSide
   }, null, 8
   /* PROPS */
-  , ["closeRightSide"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.showRightSide]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right section ")])]);
+  , ["changeCurrentLeftSide"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentLeftSide === 'group-settings']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Right section ")])]);
 });
 
 /***/ }),
