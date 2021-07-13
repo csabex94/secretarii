@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Topic;
 use App\Models\User;
 
-class GroupController extends Controller
+class HomeController extends Controller
 {
     public function index(Request $request): \Inertia\Response
     {
@@ -19,7 +20,8 @@ class GroupController extends Controller
 
         return Inertia::render('Home', [
             'findContacts' => $result,
-            'rightSide' => $currentRightSide
+            'rightSide' => $currentRightSide,
+            'currentTopics' => Topic::where('team_id', $request->user()->current_team_id)->orderBy('created_at', 'DESC')->get()
         ]);
     }
 }

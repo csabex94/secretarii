@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen">
-        <section class="shadow-xl rounded-md w-full lg:mx-auto flex overflow-hidden">
+        <section class="flex w-full overflow-hidden rounded-md shadow-xl lg:mx-auto">
             <!-- Left section -->
 
             <div class="relative">
@@ -9,7 +9,7 @@
                 <add-contact :findContacts="findContacts" :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
             </div>
 
-            <middle-section :changeCurrentLeftSide="changeCurrentLeftSide" />
+            <middle-section :currentTopics="currentTopics" :changeCurrentLeftSide="changeCurrentLeftSide" />
             <right-section v-show="currentLeftSide === 'group-settings'" :changeCurrentLeftSide="changeCurrentLeftSide" />
             <!-- Right section -->
         </section>
@@ -37,12 +37,14 @@ export default {
         laravelVersion: String,
         phpVersion: String,
         rightSide: String,
-        findContacts: Array
+        findContacts: Array,
+        currentTopics: Array
     },
     data() {
         return {
             currentRightSide: 'groups',
-            currentLeftSide: ''
+            currentLeftSide: '',
+            team_id: null
         }
     },
     methods: {
