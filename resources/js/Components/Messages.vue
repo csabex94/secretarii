@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-auto flex flex-col justify-between overflow-y-auto">
+    <div class="flex-auto flex p-5 flex-col justify-between overflow-y-auto">
         <div class="flex flex-col">
             <div class="flex flex-row p-2 w-11/12">
                 <div class="w-1/12 py-2 flex">

@@ -20476,7 +20476,7 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-ef412ed2");
 
 var _hoisted_1 = {
-  "class": "flex-auto flex flex-col justify-between overflow-y-auto"
+  "class": "flex-auto flex p-5 flex-col justify-between overflow-y-auto"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
