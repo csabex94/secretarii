@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\TopicConversationController;
 use Inertia\Inertia;
 
 /*
@@ -25,11 +26,9 @@ Route::get('/token', function() {
 Route::middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('/topic/post', [TopicController::class, 'store'])->name('topic.store');
+    Route::post('/', [TopicConversationController::class, 'store'])->name('conversation.store');
 });
 
-Route::get('/slide-test', function() {
-    return Inertia::render('SlideTest');
-})->name('slide');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');

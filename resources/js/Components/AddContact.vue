@@ -1,5 +1,5 @@
 <template>
-    <div :class="currentRightSide === 'add-contact' ? 'slideIn' : 'slideOut'" class="absolute flex flex-col items-stretch justify-start p-3 rounded-md addContact bg-gray-50 lg:rounded-none lg:rounded-l-md">
+    <div :class="currentRightSide === 'add-contact' ? 'slideIn' : 'slideOut'" class="absolute w-full flex flex-col items-stretch justify-start p-3 rounded-md addContact bg-gray-50 lg:rounded-none lg:rounded-l-md">
         <div class="flex flex-col flex-auto">
             <div class="flex flex-row flex-auto">
                 <div class="w-full p-1">
@@ -15,7 +15,7 @@
                     </form>
                 </div>
             </div>
-            <ul v-if="findContacts.length > 0" class="contactList">
+            <ul v-if="findContacts" class="contactList">
                 <li v-for="contact in findContacts" :key="contact.id" class="flex flex-row my-3">
                     <div class="mr-4">
                         <img src="/user.png" class="w-12 h-12 bg-gray-700 rounded-full contrast" alt="">
@@ -70,8 +70,6 @@ export default {
 
 <style scoped>
     .addContact {
-        width: 100%;
-        min-width: 320px;
         top: 0;
         left: 0;
         height: 100%;

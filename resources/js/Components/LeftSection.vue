@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-stretch justify-start p-3 bg-white rounded-md groups lg:rounded-none lg:rounded-l-md">
+    <div class="flex w-full flex-col items-stretch justify-start p-3 bg-white rounded-md lg:rounded-none lg:rounded-l-md">
         <div class="flex flex-col flex-auto">
             <div class="flex flex-row flex-auto">
                 <div class="w-full p-1">
@@ -112,10 +112,6 @@ export default {
     }
     .contrast {
         filter: grayscale(1) invert(1);
-    }
-    .groups {
-        width: 100%;
-        min-width: 320px;
     }
     .groupList {
         height: 90vh;

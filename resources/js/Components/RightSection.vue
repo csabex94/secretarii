@@ -1,5 +1,5 @@
 <template>
-        <div class="w-4/6 rightSide bg-gray-100 rounded-r-md p-2 customScroll overflow-y-auto">
+        <div class="h-screen bg-gray-100 rounded-r-md p-2 customScroll overflow-y-auto">
             <header class="flex flex-row justify-end items-center">
                 <button @click="changeCurrentLeftSide('')" type="button" class="p-2 ml-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring">
                     <svg class="fill-current h-6 w-6" viewBox="0 0 20 20">
@@ -103,9 +103,6 @@ export default {
     .customScroll::-webkit-scrollbar-thumb {
         background-color: gray;    /* color of the scroll thumb */
         border-radius: 10px;       /* roundness of the scroll thumb */ /* creates padding around scroll thumb */
-    }
-    .rightSide {
-        max-width: 400px;
     }
     .contrast {
         filter: grayscale(1) invert(1);

@@ -3,15 +3,37 @@
         <section class="flex w-full overflow-hidden rounded-md shadow-xl lg:mx-auto">
             <!-- Left section -->
 
-            <div class="relative">
+            <div class="relative w-2/6">
                 <left-section :changeCurrentRightSide="changeCurrentRightSide" :switchToTeam="switchToTeam" />
                 <add-group :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
                 <add-contact :findContacts="findContacts" :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
             </div>
 
-            <middle-section :currentTopics="currentTopics" :changeCurrentLeftSide="changeCurrentLeftSide" />
-            <right-section v-show="currentLeftSide === 'group-settings'" :changeCurrentLeftSide="changeCurrentLeftSide" />
-            <!-- Right section -->
+            <div class="w-full h-full bg-gray-100 flex">
+                <middle-section
+                    :currentTopicConversations="currentTopicConversations"
+                    :middleSection="middleSection"
+                    :currentTopics="currentTopics"
+                    :changeCurrentLeftSide="changeCurrentLeftSide"
+                />
+                <div
+                    :class="currentLeftSide === 'search' ? 'rightSlideIn' : 'rightSlideOut'"
+                    class="w-full h-full w-4/6">
+                    <group-search  :changeCurrentLeftSide="changeCurrentLeftSide" />
+                </div>
+                <div
+                    :class="currentLeftSide === 'profile' ? 'rightSlideIn' : 'rightSlideOut'"
+                    class="w-full h-full w-4/6">
+                    <profile :currentLeftSide="currentLeftSide"  :changeCurrentLeftSide="changeCurrentLeftSide" />
+                </div>
+                <div
+                    :class="currentLeftSide === 'group-settings' ? 'rightSlideIn' : 'rightSlideOut'"
+                    class="w-full h-full w-4/6">
+                    <right-section :changeCurrentLeftSide="changeCurrentLeftSide" />
+                </div>
+
+            </div>
+
         </section>
     </div>
 </template>
@@ -22,14 +44,18 @@ import MiddleSection from "@/Components/MiddleSection";
 import RightSection from "@/Components/RightSection";
 import AddGroup from "@/Components/AddGroup";
 import AddContact from "@/Components/AddContact";
+import Profile from "@/Components/Profile";
+import GroupSearch from "@/Components/GroupSearch";
 
 export default {
     components: {
+        Profile,
         RightSection,
         MiddleSection,
         LeftSection,
         AddGroup,
-        AddContact
+        AddContact,
+        GroupSearch
     },
     props: {
         canLogin: Boolean,
@@ -38,7 +64,9 @@ export default {
         phpVersion: String,
         rightSide: String,
         findContacts: Array,
-        currentTopics: Array
+        currentTopics: Array,
+        currentTopicConversations: Array,
+        middleSection: String
     },
     data() {
         return {
@@ -72,8 +100,18 @@ export default {
 
 <style scoped>
     section {
-        height: 100%;
-        min-height: 95vh;
+        height: 100vh;
+        max-height: 100vh;
+    }
+    .rightSlideIn {
+        transform: translateX(0);
+        transition: .5s;
+    }
+    .rightSlideOut {
+        transform: translateX(100%);
+        width: 0;
+        opacity: .5;
+        transition: .5s;
     }
 </style>
 

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Topic extends Model
+class TopicConversation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'title', 'user_id', 'team_id', 'description'
+        'user_id', 'team_id', 'topic_id', 'message', 'file_id'
     ];
 
     public function createdBy(): \Illuminate\Database\Eloquent\Relations\HasOne

@@ -1,5 +1,7 @@
 <template>
-    <div :class="currentRightSide === 'add-group' ? 'slideIn' : 'slideOut'" class="absolute flex flex-col items-stretch justify-start p-3 rounded-md addGroup bg-gray-50 lg:rounded-none lg:rounded-l-md">
+    <div
+        :class="currentRightSide === 'add-group' ? 'slideIn' : 'slideOut'"
+         class="absolute flex flex-col w-full items-stretch justify-start p-3 rounded-md addGroup bg-gray-50 lg:rounded-none lg:rounded-l-md">
         <div class="flex flex-col flex-auto">
             <div class="flex flex-row flex-auto">
                 <div class="w-full p-1">
@@ -49,8 +51,6 @@
 
 <style scoped>
     .addGroup {
-        width: 100%;
-        min-width: 320px;
         top: 0;
         left: 0;
         height: 100%;

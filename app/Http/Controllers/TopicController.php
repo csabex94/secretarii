@@ -25,8 +25,7 @@ class TopicController extends Controller
         }
         $newTopic->save();
         return Inertia::render('Home', [
-            'currentTopics' => Topic::where('team_id', $request->team_id)->get(),
-            'findContacts' => [],
+            'currentTopics' => Topic::where('team_id', $request->team_id)->with('createdBy')->orderBy('created_at', 'DESC')->get(),
             'rightSide' => 'groups'
         ]);
     }
