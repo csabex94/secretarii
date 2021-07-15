@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-full flex-col flex-auto p-5">
+    <div class="flex flex-col flex-auto h-full p-5">
 <!--        <div class="flex flex-col divide-y-2 divide-gray-100">-->
 <!--            <div v-for="topic in currentTopics" :key="topic.id" class="flex flex-col py-8">-->
 <!--                <div class="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">-->
@@ -19,27 +19,31 @@
 <!--            </div>-->
 <!--        </div>-->
 
-        <div v-for="topic in currentTopics" :key="topic.id" class="w-full px-10 my-4 py-6 bg-white ">
-            <div class="flex justify-between items-center">
-                <span class="font-light text-gray-600">{{ getFormattedDate(topic.created_at) }}</span>
-            </div>
-            <div class="mt-2">
-                <span class="text-2xl text-gray-700 font-bold hover:text-gray-600">{{ topic.title }}</span>
-                <p class="mt-2 text-gray-600">
-                    {{ topic.description }}
-                </p>
-            </div>
-            <div class="flex justify-between items-center mt-4">
-                <inertia-link :href="route('home', { topicId: topic.id })" :only="['topicConversations', 'currentTopicConversations', 'middleSection']" class="inline-flex items-center mt-4 text-indigo-500">
-                    <button type="button" class="px-5 py-2 text-sm text-white bg-blue-500 rounded-md focus:outline-none hover:bg-blue-600 hover:shadow-lg">
-                        Messages
-                    </button>
-                </inertia-link>
-                <div>
-                    <span class="flex items-center">
-                        <img class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block" src="/user.png" alt="avatar">
-                        <h1 class="text-gray-700 font-bold">{{ topic.created_by.name }}</h1>
-                    </span>
+        <div v-if="currentTopics">
+            <div v-for="topic in currentTopics" :key="topic.id" class="w-full px-10 py-6 my-4 bg-white border-b border-gray-200 ">
+                <div class="flex items-center justify-between">
+                    <span class="font-light text-gray-600">{{ getFormattedDate(topic.created_at) }}</span>
+                    <span class="flex flex-row">
+                            <div class="mr-4">
+                                <img src="/user.png" class="w-8 h-8 bg-gray-700 rounded-full contrast" alt="">
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <h2 class="text-sm text-gray-500">{{ topic.created_by.name }}</h2>
+                            </div>
+                        </span>
+                </div>
+                <div class="mt-2">
+                    <span class="text-2xl font-bold text-gray-700 hover:text-gray-600">{{ topic.title }}</span>
+                    <p class="mt-2 text-gray-600">
+                        {{ topic.description }}
+                    </p>
+                </div>
+                <div class="flex items-center justify-between mt-4">
+                    <inertia-link  :href="route('home', { topicId: topic.id })" :only="['topicConversations', 'currentTopicConversations', 'middleSection', 'topicName']" class="inline-flex items-center mt-4 text-indigo-500">
+                        <button type="button" class="px-5 py-2 text-sm text-white bg-blue-500 rounded-md focus:outline-none hover:bg-blue-600 hover:shadow-lg">
+                            Messages
+                        </button>
+                    </inertia-link>
                 </div>
             </div>
         </div>
@@ -53,7 +57,8 @@ export default {
     name: "Messages",
     props: {
         currentTopics: Array,
-        changeCurrentMiddleSection: Function
+        changeCurrentMiddleSection: Function,
+        setCurrentTopic: Function
     },
     methods: {
         getFormattedDate(date) {
@@ -64,4 +69,7 @@ export default {
 </script>
 
 <style scoped>
+ .contrast {
+        filter: grayscale(1) invert(1);
+    }
 </style>

@@ -1,31 +1,33 @@
 <template>
-    <div class="w-full overflow-y-hidden flex flex-col items-stretch justify-start bg-white border-l-2 border-r-2 border-gray-100 lg:rounded-r-md xl:rounded-none">
+    <div class="flex flex-col items-stretch justify-start w-full overflow-y-hidden bg-white border-l-2 border-r-2 border-gray-100 lg:rounded-r-md xl:rounded-none">
         <!-- Header with name -->
         <div v-if="$page.props.user.current_team" class="flex flex-row items-center justify-between px-3 py-2 border-b-2 border-gray-100 bg-gray-50 bg-opacity-40">
             <div class="flex items-center">
                 <inertia-link v-show="middleSection === 'topic-conversations'" :href="route('home')" :only="['middleSection']">
                     <button type="button" class="p-2 mr-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-300 focus:outline-none focus:ring">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
                         </svg>
                     </button>
                 </inertia-link>
                 <h2>
-                    <span class="text-blue-400 font-semibold">{{ $page.props.user.current_team.name }}</span>
+                    <span class="font-semibold text-blue-400">{{ $page.props.user.current_team.name }}</span>
                     <inertia-link v-show="middleSection === 'topics'" :href="route('home')" :only="['middleSection']">
-                        <span class="text-blue-400 font-semibold">
+                        <span class="font-semibold text-blue-400">
                         <span class="text-gray-500"> / </span>
                             Topics</span>
                     </inertia-link>
-                    <span class="text-blue-400 font-semibold" v-show="middleSection === 'topic-conversations'">
+                    <span class="font-semibold text-blue-400" v-show="middleSection === 'topic-conversations'">
                         <inertia-link :href="route('home')" :only="['middleSection']">
-                        <span class="text-blue-400 font-semibold">
-                        <span class="text-gray-500"> / </span>
-                            Topics</span>
-                    </inertia-link>
-                        <span class="text-gray-500"> / </span>
-                        Conversations</span>
-                </h2>
+                            <span class="font-semibold text-blue-400">
+                            <span class="text-gray-500"> / </span>
+                                Topics</span>
+                        </inertia-link>
+                            <span class="text-gray-500"> / </span>
+                            Conversations</span>
+                            <span class="text-gray-500"> / </span>
+                            {{  }}
+                    </h2>
             </div>
             <div class="flex flex-row">
 
@@ -55,7 +57,7 @@
         </div>
 
 
-        <div class="overflow-y-auto flex-grow customScroll" scroll-region>
+        <div class="flex-grow overflow-y-auto customScroll">
             <form @submit.prevent="postTopic($page.props.user.current_team_id)" v-if="showAddTopicForm" class="flex flex-row items-center justify-between p-3 myForm">
                 <div class="flex flex-col flex-1 px-3">
                     <input v-model="topicForm.title" class="p-2 mb-4 text-sm bg-gray-100 border border-gray-300 rounded-md outline-none focus:border-gray-500 focus:ring-transparent title" spellcheck="false" placeholder="Title" type="text">
@@ -73,14 +75,14 @@
         <!-- Messages -->
         <!-- Input for writing a messages -->
 
-            <messages v-show="currentMiddleSection === 'topics'" :currentTopics="currentTopics" :changeCurrentMiddleSection="changeCurrentMiddleSection" />
+            <messages :setCurrentTopic="setCurrentTopic" v-show="currentMiddleSection === 'topics'" :currentTopics="currentTopics" :changeCurrentMiddleSection="changeCurrentMiddleSection" />
             <topic-conversations
                 :currentTopicConversations="currentTopicConversations"
-                v-show="currentMiddleSection === 'topic-conversations'"
+                v-if="currentMiddleSection === 'topic-conversations'"
                 :changeCurrentMiddleSection="changeCurrentMiddleSection"
             />
         </div>
-        <form v-show="currentMiddleSection === 'topic-conversations'" @submit.prevent="writeMessage" class="flex border-t-2 border-gray-200 flex-row items-center justify-between p-3">
+        <form v-show="currentMiddleSection === 'topic-conversations'" @submit.prevent="writeMessage" class="flex flex-row items-center justify-between p-3 border-t-2 border-gray-200">
             <div class="">
                 <button type="button" class="p-2 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring" aria-label="Upload a files">
                     <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
@@ -134,6 +136,7 @@ export default {
         return {
             showAddTopicForm: false,
             currentMiddleSection: 'topics',
+            currentTopic: "",
             topicForm: this.$inertia.form({
                 _method: "post",
                 title: "",
@@ -156,6 +159,9 @@ export default {
         changeCurrentMiddleSection(component) {
             this.currentMiddleSection = component;
         },
+        setCurrentTopic(topicName) {
+            this.currentTopic = topicName;
+        },
         postTopic(teamId) {
             this.topicForm.team_id = teamId;
             this.topicForm.post(route('topic.store'
@@ -170,7 +176,10 @@ export default {
         },
         writeMessage() {
             this.form.post(route('conversation.store', { topicId: this.$page.url.split('=')[1] }), {
-                preserveScroll: true
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.form.reset();
+                }
             });
         }
     },

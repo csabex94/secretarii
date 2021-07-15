@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full flex-col items-stretch justify-start p-3 bg-white rounded-md lg:rounded-none lg:rounded-l-md">
+    <div class="flex flex-col items-stretch justify-start w-full p-3 bg-white rounded-md lg:rounded-none lg:rounded-l-md">
         <div class="flex flex-col flex-auto">
             <div class="flex flex-row flex-auto">
                 <div class="w-full p-1">

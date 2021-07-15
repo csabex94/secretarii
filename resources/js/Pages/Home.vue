@@ -9,27 +9,32 @@
                 <add-contact :findContacts="findContacts" :changeCurrentRightSide="changeCurrentRightSide" :currentRightSide="currentRightSide" />
             </div>
 
-            <div class="w-full h-full bg-gray-100 flex">
+            <div class="flex w-full h-full bg-gray-100">
                 <middle-section
                     :currentTopicConversations="currentTopicConversations"
                     :middleSection="middleSection"
                     :currentTopics="currentTopics"
                     :changeCurrentLeftSide="changeCurrentLeftSide"
                 />
-                <div
-                    :class="currentLeftSide === 'search' ? 'rightSlideIn' : 'rightSlideOut'"
-                    class="w-full h-full w-4/6">
-                    <group-search  :changeCurrentLeftSide="changeCurrentLeftSide" />
-                </div>
-                <div
-                    :class="currentLeftSide === 'profile' ? 'rightSlideIn' : 'rightSlideOut'"
-                    class="w-full h-full w-4/6">
-                    <profile :currentLeftSide="currentLeftSide"  :changeCurrentLeftSide="changeCurrentLeftSide" />
-                </div>
-                <div
-                    :class="currentLeftSide === 'group-settings' ? 'rightSlideIn' : 'rightSlideOut'"
-                    class="w-full h-full w-4/6">
-                    <right-section :changeCurrentLeftSide="changeCurrentLeftSide" />
+                <div 
+                    :class="currentLeftSide === 'search' || currentLeftSide === 'profile' || currentLeftSide === 'group-settings' ? 'rightSlideIn' : 'rightSlideOut'"
+                    class="relative w-4/6 h-full"
+                >
+                    <div
+                        v-if="currentLeftSide === 'search'"
+                        class="w-full h-full">
+                        <group-search  :changeCurrentLeftSide="changeCurrentLeftSide" />
+                    </div>
+                    <div
+                        v-if="currentLeftSide === 'profile'"
+                        class="w-full h-full">
+                        <profile :currentLeftSide="currentLeftSide"  :changeCurrentLeftSide="changeCurrentLeftSide" />
+                    </div>
+                    <div
+                        v-if="currentLeftSide === 'group-settings'"
+                        class="w-full h-full">
+                        <right-section :changeCurrentLeftSide="changeCurrentLeftSide" />
+                    </div>
                 </div>
 
             </div>
@@ -66,13 +71,14 @@ export default {
         findContacts: Array,
         currentTopics: Array,
         currentTopicConversations: Array,
-        middleSection: String
+        middleSection: String,
     },
     data() {
         return {
             currentRightSide: 'groups',
             currentLeftSide: '',
-            team_id: null
+            team_id: null,
+            
         }
     },
     methods: {
@@ -87,13 +93,21 @@ export default {
             })
         },
         changeCurrentLeftSide(component) {
+            localStorage.setItem('cr_side', component);
             this.currentLeftSide = component;
-        }
+        },
+        checkLastLeftSide() {
+            let component = localStorage.getItem('cr_side');
+            if (component) {
+                this.currentLeftSide = component;
+            }
+        },
     },
     mounted() {
         if (this.rightSide) {
             this.currentRightSide = this.rightSide;
         }
+        this.checkLastLeftSide();
     }
 }
 </script>
